@@ -34,6 +34,11 @@ SELECT FirstName, LastName, City
 FROM Client
 WHERE City = 'Metairie' OR City = 'Kenner' OR City = 'Gretna';
 
+-- OR
+SELECT FirstName, LastName, City
+FROM Client
+WHERE city IN ('Metairie', 'Kenner', 'Gretna');
+
 -- 9
 SELECT FirstName, LastName, BirthDate
 FROM Client
@@ -67,6 +72,51 @@ WHERE ParentCategoryId IS NOT NULL;
 -- 15
 SELECT name, notes
 FROM workout
-WHERE levelid = 3 AND notes LIKE '%you%';
+WHERE levelid = 3 AND notes LIKE '% you %';
 
 -- 16
+SELECT firstname, lastname, city
+FROM client
+WHERE (city = 'LaPlace') 
+AND (lastname LIKE 'L%' OR lastname LIKE 'M%' OR lastname LIKE 'N%');
+
+-- can also do
+SELECT
+	FirstName,
+    LastName,
+    City
+FROM Client
+WHERE LastName REGEXP '^[LMN]'
+AND City = 'LaPlace';
+
+-- 17
+SELECT
+	InvoiceId,
+    Description,
+    Price,
+    Quantity,
+    ServiceDate,
+    Price * Quantity AS LineItemTotal
+FROM InvoiceLineItem
+WHERE Price * Quantity BETWEEN '15' AND '25';
+
+-- 18
+SELECT *
+FROM client
+INNER JOIN login
+ON client.clientid = login.clientid
+WHERE firstname = 'Estrella' AND lastname = 'Bazely';
+
+-- 19
+SELECT goal.name
+FROM workout
+JOIN workoutgoal ON workout.workoutid = workoutgoal.workoutid
+JOIN goal ON workoutgoal.goalid = goal.goalid
+WHERE workout.name = 'This Is Parkour';
+
+
+
+excell pivot tables make tables with sliecers and charting using slicers
+itil high end knowledge. 
+sql know a lot
+differences between inident management and problem management
