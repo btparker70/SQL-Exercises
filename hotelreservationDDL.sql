@@ -1,0 +1,56 @@
+DROP DATABASE IF EXISTS HotelReservation;
+CREATE DATABASE HotelReservation;
+USE HotelReservation;
+
+CREATE TABLE Guest(
+GuestId INT PRIMARY KEY AUTO_INCREMENT,
+Firstname VARCHAR(50) NOT NULL,
+LastName VARCHAR(50) NOT NULL,
+Address VARCHAR(100) NOT NULL,
+City VARCHAR(40) NOT NULL,
+State VARCHAR(2) NOT NULL,
+Zip VARCHAR(9) NOT NULL,
+Phone TINYINT NOT NULL,
+Email VARCHAR(65) NOT NULL
+);
+
+CREATE TABLE Amenity(
+AmenityId INT PRIMARY KEY AUTO_INCREMENT,
+Microwave BOOL NOT NULL,
+Refrigerator BOOL NOT NULL,
+Jacuzzi BOOL NOT NULL
+);
+        
+CREATE TABLE Room(
+Number TINYINT PRIMARY KEY,
+Type VARCHAR(20) NOT NULL,
+ADA BOOL NOT NULL,
+AmenityId INT NOT NULL,
+FOREIGN KEY fk_AmenityId (AmenityId) REFERENCES Amenity(AmenityId)
+);
+
+CREATE TABLE Reservation(
+ReservationId INT PRIMARY KEY AUTO_INCREMENT,
+StartDate DATE NOT NULL,
+EndDate DATE NOT NULL,
+Adults TINYINT,
+Children TINYINT,
+TotalCost DECIMAL(10,2),
+GuestId INT NOT NULL,
+`Number` TINYINT NOT NULL,
+FOREIGN KEY fk_GuestId (GuestId) REFERENCES Guest(GuestId),
+FOREIGN KEY fk_RoomNumber (`Number`) REFERENCES Room(`Number`)
+);
+
+
+CREATE TABLE Price(
+PriceId INT PRIMARY KEY AUTO_INCREMENT,
+Single DECIMAL(10,2) NOT NULL,
+`Double` DECIMAL(10,2) NOT NULL,
+Suite DECIMAL(10,2) NOT NULL,
+ExtraPersonDouble DECIMAL(5,2) NOT NULL,
+ExtraPersonSuite DECIMAL(5,2) NOT NULL,
+JacuzziFee DECIMAL(5,2) NOT NULL,
+ReservationId INT NOT NULL,
+FOREIGN KEY fk_ReservationId (ReservationId) REFERENCES Reservation(ReservationId)
+);
